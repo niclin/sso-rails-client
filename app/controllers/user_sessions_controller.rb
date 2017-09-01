@@ -1,12 +1,12 @@
 class UserSessionsController < ApplicationController
-  before_filter :login_required, only: [ :destroy ]
+  before_action :login_required, only: [ :destroy ]
 
   # omniauth callback method
   #
   # First the callback operation is done
   # inside OmniAuth and then this route is called
   def create
-    omniauth = env['omniauth.auth']
+    omniauth = request.env["omniauth.auth"]
     logger.debug "+++ #{omniauth}"
 
     user = User.find_by_uid(omniauth['uid'])
